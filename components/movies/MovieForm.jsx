@@ -78,8 +78,6 @@ const MovieForm = ({ movie = null }) => {
   
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="bg-white shadow-md rounded-lg p-6">
-      <h2 className="text-2xl font-bold mb-6">{movie ? 'Edit Movie' : 'Add New Movie'}</h2>
-      
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
           {error}
