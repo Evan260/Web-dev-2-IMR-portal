@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react';
 import { useState } from 'react';
 import DeleteConfirmation from './DeleteConfirmation';
 
-const MovieCard = ({ movie, onDeleteSuccess }) => {
+const MovieCard = ({ movie, onDeleteSuccess = () => {} }) => {
   const { data: session } = useSession();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   

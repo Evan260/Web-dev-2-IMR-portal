@@ -6,7 +6,7 @@
  */
 import { useState } from 'react';
 
-const DeleteConfirmation = ({ movieId, movieTitle, onClose, onDeleteSuccess }) => {
+const DeleteConfirmation = ({ movieId, movieTitle, onClose = () => {}, onDeleteSuccess = () => {} }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState(null);
   
@@ -24,7 +24,11 @@ const DeleteConfirmation = ({ movieId, movieTitle, onClose, onDeleteSuccess }) =
         throw new Error(data.message || 'Failed to delete movie');
       }
       
-      onDeleteSuccess(movieId);
+      // Check if onDeleteSuccess is a function before calling it
+      if (typeof onDeleteSuccess === 'function') {
+        onDeleteSuccess(movieId);
+      }
+      
       onClose();
     } catch (err) {
       setError(err.message);
@@ -35,8 +39,8 @@ const DeleteConfirmation = ({ movieId, movieTitle, onClose, onDeleteSuccess }) =
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 max-w-md w-full">
-        <h2 className="text-2xl font-bold mb-4">Delete Movie</h2>
-        <p className="mb-6">
+        <h2 className="text-2xl text-black font-bold mb-4">Delete Movie</h2>
+        <p className="mb-6 text-black">
           Are you sure you want to delete &quot;{movieTitle}&quot;? This action cannot be undone.
         </p>
         

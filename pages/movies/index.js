@@ -11,10 +11,18 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import prisma from "../../lib/prisma";
 
-export default function Movies({ movies }) {
+export default function Movies({ movies: initialMovies }) {
   const [searchTerm, setSearchTerm] = useState("");
+  const [movies, setMovies] = useState(initialMovies);
   const { data: session } = useSession();
   const isAdmin = session?.user?.role === "ADMIN";
+
+  // Handle movie deletion by updating the state
+  const handleMovieDelete = (deletedMovieId) => {
+    setMovies((prevMovies) =>
+      prevMovies.filter((movie) => movie.id !== deletedMovieId)
+    );
+  };
 
   // Filter movies based on search term; if searchTerm is empty, return all movies.
   const filteredMovies =
@@ -25,13 +33,13 @@ export default function Movies({ movies }) {
           // Check if title, any actor, or releaseYear match the search term
           return (
             movie.title.toLowerCase().includes(term) ||
-            (movie.actors && movie.actors.some((actor) => actor.toLowerCase().includes(term))) ||
+            (movie.actors &&
+              movie.actors.some((actor) =>
+                actor.toLowerCase().includes(term)
+              )) ||
             movie.releaseYear.toString().includes(term)
           );
         });
-
-  // (Optional) For debugging, you could log the movies data in the browser console:
-  // console.log("Movies from server:", movies);
 
   return (
     <>
@@ -62,10 +70,15 @@ export default function Movies({ movies }) {
         </div>
 
         {filteredMovies.length > 0 ? (
-          <MovieList movies={filteredMovies} />
+          <MovieList
+            movies={filteredMovies}
+            onDeleteMovie={handleMovieDelete}
+          />
         ) : (
           <div className="text-center py-10">
-            <h2 className="text-2xl font-bold text-gray-700 mb-2">No movies found</h2>
+            <h2 className="text-2xl font-bold text-gray-700 mb-2">
+              No movies found
+            </h2>
             <p className="text-gray-600">Try adjusting your search criteria.</p>
           </div>
         )}
@@ -79,7 +92,6 @@ export async function getServerSideProps() {
     const movies = await prisma.movie.findMany({
       orderBy: { title: "asc" },
     });
-    console.log("Fetched movies:", movies); // This should log to your terminal
     return {
       props: {
         movies: JSON.parse(JSON.stringify(movies)),
@@ -94,4 +106,3 @@ export async function getServerSideProps() {
     };
   }
 }
-

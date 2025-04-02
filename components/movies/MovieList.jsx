@@ -6,7 +6,7 @@
  */
 import MovieCard from './MovieCard';
 
-const MovieList = ({ movies, onDeleteMovie }) => {
+const MovieList = ({ movies, onDeleteMovie = () => {} }) => {
   if (!movies || movies.length === 0) {
     return (
       <div className="text-center py-10">
