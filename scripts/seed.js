@@ -27,41 +27,4 @@ async function main() {
   } else {
     console.log("Admin user already exists");
   }
-
-  // Add some sample movies
-  const moviesCount = await prisma.movie.count();
-
-  if (moviesCount === 0) {
-    await prisma.movie.createMany({
-      data: [
-        {
-          title: "Inception",
-          actors: ["Leonardo DiCaprio", "Joseph Gordon-Levitt", "Ellen Page"],
-          releaseYear: 2010,
-        },
-        {
-          title: "The Dark Knight",
-          actors: ["Christian Bale", "Heath Ledger", "Aaron Eckhart"],
-          releaseYear: 2008,
-        },
-        {
-          title: "Interstellar",
-          actors: ["Matthew McConaughey", "Anne Hathaway", "Jessica Chastain"],
-          releaseYear: 2014,
-        },
-      ],
-    });
-    console.log("Sample movies added successfully");
-  } else {
-    console.log("Movies already exist in the database");
-  }
 }
-
-main()
-  .catch((e) => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
