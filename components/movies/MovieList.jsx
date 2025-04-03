@@ -17,13 +17,17 @@ const MovieList = ({ movies, onDeleteMovie = () => {} }) => {
   }
   
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {movies.map(movie => (
-        <MovieCard 
-          key={movie.id} 
-          movie={movie} 
-          onDeleteSuccess={onDeleteMovie} 
-        />
+        <div
+          key={movie.id}
+          className="transform transition duration-300 hover:scale-105"
+        >
+          <MovieCard 
+            movie={movie} 
+            onDeleteSuccess={onDeleteMovie} 
+          />
+        </div>
       ))}
     </div>
   );
