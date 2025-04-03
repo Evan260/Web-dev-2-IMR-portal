@@ -17,20 +17,17 @@ export default function Movies({ movies: initialMovies }) {
   const { data: session } = useSession();
   const isAdmin = session?.user?.role === "ADMIN";
 
-  // Handle movie deletion by updating the state
   const handleMovieDelete = (deletedMovieId) => {
     setMovies((prevMovies) =>
       prevMovies.filter((movie) => movie.id !== deletedMovieId)
     );
   };
 
-  // Filter movies based on search term; if searchTerm is empty, return all movies.
   const filteredMovies =
     searchTerm.trim() === ""
       ? movies
       : movies.filter((movie) => {
           const term = searchTerm.toLowerCase();
-          // Check if title, any actor, or releaseYear match the search term
           return (
             movie.title.toLowerCase().includes(term) ||
             (movie.actors &&
@@ -47,41 +44,48 @@ export default function Movies({ movies: initialMovies }) {
         <title>Movies Collection</title>
         <meta name="description" content="Browse our movie collection" />
       </Head>
-      <div className="py-6">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
-          <h1 className="text-3xl font-bold mb-4 md:mb-0">Movies Collection</h1>
-          {isAdmin && (
-            <Link href="/movies/add">
-              <span className="inline-block bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 cursor-pointer">
-                + Add New Movie
-              </span>
-            </Link>
+      <div className="py-10">
+        <div className="text-center mb-10">
+          <h1 className="text-4xl font-bold text-white mb-3">Movies Collection</h1>
+          <p className="text-gray-300 max-w-xl mx-auto text-lg">
+            Browse, search, and manage your favorite movies.
+          </p>
+        </div>
+
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+            <h2 className="text-2xl font-semibold text-white mb-4 md:mb-0">Browse All Titles</h2>
+            {isAdmin && (
+              <Link href="/movies/add">
+                <span className="inline-block bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-700 transform transition duration-300 hover:scale-105 cursor-pointer font-medium">
+                  + Add New Movie
+                </span>
+              </Link>
+            )}
+          </div>
+
+          <div className="mb-8">
+            <input
+              type="text"
+              placeholder="Search movies by title, actor, or year..."
+              className="w-full p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+
+          {filteredMovies.length > 0 ? (
+            <MovieList
+              movies={filteredMovies}
+              onDeleteMovie={handleMovieDelete}
+            />
+          ) : (
+            <div className="text-center py-10 bg-gray-800 text-white rounded-xl shadow-md">
+              <h2 className="text-2xl font-bold mb-2">No movies found</h2>
+              <p className="text-gray-300">Try adjusting your search criteria.</p>
+            </div>
           )}
         </div>
-
-        <div className="mb-6">
-          <input
-            type="text"
-            placeholder="Search movies by title, actor, or year..."
-            className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-
-        {filteredMovies.length > 0 ? (
-          <MovieList
-            movies={filteredMovies}
-            onDeleteMovie={handleMovieDelete}
-          />
-        ) : (
-          <div className="text-center py-10">
-            <h2 className="text-2xl font-bold text-gray-700 mb-2">
-              No movies found
-            </h2>
-            <p className="text-gray-600">Try adjusting your search criteria.</p>
-          </div>
-        )}
       </div>
     </>
   );
