@@ -28,20 +28,20 @@ export default function Home() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          <div className="bg-purple-700 text-white p-8 rounded-2xl shadow-lg transform transition duration-300 hover:scale-105">
+          <div className="bg-gray-800 text-white p-8 rounded-2xl shadow-lg transform transition duration-300 hover:scale-105">
             <h2 className="text-2xl font-bold mb-4">Browse Movies</h2>
             <p className="mb-6">
               Explore our extensive collection of movies. Find information about titles, actors, and release years.
             </p>
             <Link href="/movies">
-              <span className="inline-block bg-white text-purple-700 px-6 py-3 rounded-md hover:bg-gray-200 cursor-pointer font-medium transition duration-200">
+              <span className="inline-block bg-white text-gray-800 px-6 py-3 rounded-md hover:bg-gray-200 cursor-pointer font-medium transition duration-200">
                 View Movies
               </span>
             </Link>
           </div>
 
           {session ? (
-            <div className="bg-purple-700 text-white p-8 rounded-2xl shadow-lg transform transition duration-300 hover:scale-105">
+            <div className="bg-gray-800 text-white p-8 rounded-2xl shadow-lg transform transition duration-300 hover:scale-105">
               <h2 className="text-2xl font-bold mb-4">Welcome Back, {session.user.name}!</h2>
               <p className="mb-6">
                 {session.user.role === "ADMIN"
@@ -50,26 +50,26 @@ export default function Home() {
               </p>
               {session.user.role === "ADMIN" && (
                 <Link href="/movies/add">
-                  <span className="inline-block bg-white text-purple-700 px-6 py-3 rounded-md hover:bg-gray-200 cursor-pointer font-medium transition duration-200">
+                  <span className="inline-block bg-white text-gray-800 px-6 py-3 rounded-md hover:bg-gray-200 cursor-pointer font-medium transition duration-200">
                     Add New Movie
                   </span>
                 </Link>
               )}
             </div>
           ) : (
-            <div className="bg-purple-700 text-white p-8 rounded-2xl shadow-lg transform transition duration-300 hover:scale-105">
+            <div className="bg-gray-800 text-white p-8 rounded-2xl shadow-lg transform transition duration-300 hover:scale-105">
               <h2 className="text-2xl font-bold mb-4">Join Us</h2>
               <p className="mb-6">
                 Sign in to your account or create a new one to get the full IMR experience.
               </p>
               <div className="flex space-x-4">
                 <Link href="/login">
-                  <span className="inline-block bg-white text-purple-700 px-6 py-3 rounded-md hover:bg-gray-200 cursor-pointer font-medium transition duration-200">
+                  <span className="inline-block bg-white text-gray-800 px-6 py-3 rounded-md hover:bg-gray-200 cursor-pointer font-medium transition duration-200">
                     Sign In
                   </span>
                 </Link>
                 <Link href="/signup">
-                  <span className="inline-block bg-white text-purple-700 px-6 py-3 rounded-md hover:bg-gray-200 cursor-pointer font-medium transition duration-200">
+                  <span className="inline-block bg-white text-gray-800 px-6 py-3 rounded-md hover:bg-gray-200 cursor-pointer font-medium transition duration-200">
                     Sign Up
                   </span>
                 </Link>
@@ -100,13 +100,13 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mt-16 py-16 px-6 bg-purple-700 rounded-2xl shadow-xl text-white text-center max-w-5xl mx-auto transform transition duration-300 hover:scale-105">
+        <div className="mt-16 py-16 px-6 bg-gray-800 rounded-2xl shadow-xl text-white text-center max-w-5xl mx-auto transform transition duration-300 hover:scale-105">
           <h2 className="text-3xl font-bold mb-4">Ready to Dive In?</h2>
           <p className="text-lg mb-6">
             Sign up or log in to start browsing and renting your favorite movies!
           </p>
           <Link href="/signup">
-            <span className="inline-block bg-white text-purple-700 px-6 py-3 rounded-md hover:bg-gray-200 cursor-pointer font-medium transition duration-200">
+            <span className="inline-block bg-white text-gray-800 px-6 py-3 rounded-md hover:bg-gray-200 cursor-pointer font-medium transition duration-200">
               Get Started
             </span>
           </Link>
