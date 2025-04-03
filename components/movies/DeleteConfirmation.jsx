@@ -9,58 +9,57 @@ import { useState } from 'react';
 const DeleteConfirmation = ({ movieId, movieTitle, onClose = () => {}, onDeleteSuccess = () => {} }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [error, setError] = useState(null);
-  
+
   const handleDelete = async () => {
     setIsDeleting(true);
     setError(null);
-    
+
     try {
       const response = await fetch(`/api/movies/${movieId}`, {
         method: 'DELETE',
       });
-      
+
       if (!response.ok) {
         const data = await response.json();
         throw new Error(data.message || 'Failed to delete movie');
       }
-      
-      // Check if onDeleteSuccess is a function before calling it
+
       if (typeof onDeleteSuccess === 'function') {
         onDeleteSuccess(movieId);
       }
-      
+
       onClose();
     } catch (err) {
       setError(err.message);
       setIsDeleting(false);
     }
   };
-  
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 max-w-md w-full">
-        <h2 className="text-2xl text-black font-bold mb-4">Delete Movie</h2>
-        <p className="mb-6 text-black">
-          Are you sure you want to delete &quot;{movieTitle}&quot;? This action cannot be undone.
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
+      <div className="bg-white rounded-2xl p-8 w-full max-w-md shadow-xl">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">Delete Movie</h2>
+        <p className="text-gray-700 mb-6">
+          Are you sure you want to delete <span className="font-semibold">&quot;{movieTitle}&quot;</span>? This action cannot be undone.
         </p>
-        
+
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
             {error}
           </div>
         )}
-        
-        <div className="flex justify-end space-x-3">
+
+        <div className="flex justify-end gap-4">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300"
+            className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-200"
             disabled={isDeleting}
           >
             Cancel
           </button>
           <button
             onClick={handleDelete}
-            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+            className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 transition duration-200"
             disabled={isDeleting}
           >
             {isDeleting ? 'Deleting...' : 'Delete'}
