@@ -60,7 +60,6 @@ const MovieForm = ({ movie = null }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        credentials: 'include',
         body: JSON.stringify(movieData),
       });
       
@@ -69,6 +68,7 @@ const MovieForm = ({ movie = null }) => {
         throw new Error(errorData.message || 'Something went wrong');
       }
       
+      // Redirect to movies list
       router.push('/movies');
     } catch (err) {
       setError(err.message);
