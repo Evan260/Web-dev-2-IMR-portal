@@ -1,3 +1,9 @@
+/**
+ * NextAuth Configuration
+ *
+ * This file configures NextAuth for user authentication.
+ * It sets up the credentials provider and JWT handling.
+ */
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaClient } from "@prisma/client";
