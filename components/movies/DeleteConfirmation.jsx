@@ -2,6 +2,7 @@
  * DeleteConfirmation Component
  * 
  * This component displays a confirmation modal before deleting a movie.
+ * It handles the delete operation and provides feedback on the result.
  */
 import { useState } from 'react';
 
@@ -16,7 +17,6 @@ const DeleteConfirmation = ({ movieId, movieTitle, onClose = () => {}, onDeleteS
     try {
       const response = await fetch(`/api/movies/${movieId}`, {
         method: 'DELETE',
-        credentials: 'include',
       });
 
       if (!response.ok) {
@@ -37,7 +37,7 @@ const DeleteConfirmation = ({ movieId, movieTitle, onClose = () => {}, onDeleteS
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
-      <div className="bg-white w-96 rounded-2xl p-6 shadow-lg flex flex-col justify-between">
+      <div className="bg-white rounded-2xl p-8 w-full max-w-md shadow-xl">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">Delete Movie</h2>
         <p className="text-gray-700 mb-6">
           Are you sure you want to delete <span className="font-semibold">&quot;{movieTitle}&quot;</span>? This action cannot be undone.
@@ -49,7 +49,7 @@ const DeleteConfirmation = ({ movieId, movieTitle, onClose = () => {}, onDeleteS
           </div>
         )}
 
-        <div className="flex justify-end gap-4 mt-auto">
+        <div className="flex justify-end gap-4">
           <button
             onClick={onClose}
             className="px-4 py-2 rounded bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-200"
